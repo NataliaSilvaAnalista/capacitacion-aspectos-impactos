@@ -165,6 +165,9 @@ label.rad.on{border-color:var(--green);background:var(--green-tint)}
 .const b{color:var(--navy)}
 .marco-form{width:100%;height:780px;border:2px solid var(--line);border-radius:18px;margin-top:12px;background:#fff;display:block}
 .codigo{font-size:1.25rem;font-weight:800;letter-spacing:1px;color:var(--navy)}
+.impbox{margin-top:12px;border-color:var(--green);background:#fff}
+.impbox small{color:#1d7f2a}
+.impbox .t{font-size:clamp(22px,5.6vw,26px)}
 [hidden]{display:none!important}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -210,9 +213,9 @@ var R2=[
  {t:"Uso de combustible en un viaje",a:"aspecto",w:"Es la parte de la actividad que interactúa con el ambiente."}
 ];
 var R3=[
- {s:"Mantenimiento de equipos de aire acondicionado",a:"Generación de residuos peligrosos y posible liberación de refrigerantes",r:"negativo",w:"Si no se manejan bien, afectan el suelo, el agua y la atmósfera. Estos residuos necesitan un manejo controlado."},
- {s:"Asesorar a empresas para que adopten modelos de negocio sostenibles",a:"Prestación de nuestros servicios de consultoría",r:"positivo",w:"Los impactos no siempre son negativos. Lo que hace Fractal también deja huella buena: las empresas reducen la suya."},
- {s:"Desechar muebles en desuso",a:"Generación de residuos voluminosos",r:"negativo",w:"Si no se aprovechan, los muebles terminan ocupando espacio en el relleno sanitario. Por eso conviene darles una segunda vida antes de desecharlos."}
+ {ap:"Prestación de nuestros servicios de consultoría",im:"Las empresas incorporan prácticas sostenibles y reducen su huella ambiental",r:"positivo",w:"Los impactos no siempre son negativos. Lo que hace Fractal también deja huella buena: las empresas reducen la suya."},
+ {ap:"Mantenimiento de equipos de aire acondicionado",im:"Generación de residuos peligrosos y posible liberación de refrigerantes",r:"negativo",w:"Si no se manejan bien, afectan el suelo, el agua y la atmósfera. Estos residuos necesitan un manejo controlado."},
+ {ap:"Separación de residuos en la fuente",im:"Más residuos se aprovechan y menos terminan en el relleno sanitario",r:"positivo",w:"Separar en la fuente mantiene limpio el material y permite aprovecharlo. Es un impacto positivo que todos podemos generar cada día."}
 ];
 var COMP=["Apagar equipos y luces cuando no los uso","Imprimir solo lo necesario","Separar mis residuos en la fuente","Cerrar la llave cuando no estoy usando el agua","Agrupar o evitar desplazamientos cuando se pueda"];
 var MAXR=[R1.length,R2.length,R3.length], TOTAL=MAXR[0]+MAXR[1]+MAXR[2];
@@ -271,7 +274,7 @@ function intro(n,title,steps,note,btn){
 }
 function i1(){return intro(1,"Arma la cadena",["Lee la actividad de tu día a día.","Elige la opción que tiene el aspecto y el impacto que le corresponden.","Te explicamos la respuesta y sigues con la siguiente."],"","r1");}
 function i2(){return intro(2,"¿Aspecto o impacto?",["Lee la frase.","Decide si es un aspecto o un impacto.","Te explicamos la respuesta y sigues con la siguiente."],"Si la frase nombra algo que hacemos o usamos, es un aspecto. Si nombra lo que le pasa al ambiente, es un impacto.","r2");}
-function i3(){return intro(3,"¿Positivo o negativo?",["Lee la actividad. El aspecto ya te lo mostramos.","Decide si el <b>impacto</b> sobre el ambiente es positivo (lo beneficia) o negativo (lo afecta).","Te explicamos la respuesta y sigues con la siguiente."],"Un impacto también puede ser positivo. No todo lo que hacemos perjudica al ambiente.","r3");}
+function i3(){return intro(3,"¿Positivo o negativo?",["Lee el aspecto: la parte de la actividad que interactúa con el ambiente.","Lee el <b>impacto</b> que genera y decide si es positivo (beneficia al ambiente) o negativo (lo afecta).","Te explicamos la respuesta y sigues con la siguiente."],"Un impacto también puede ser positivo. No todo lo que hacemos perjudica al ambiente.","r3");}
 function opts1(q){
   var h='<div class="opts">';
   q.o.forEach(function(p,k){
@@ -301,9 +304,9 @@ function r3(){
   var q=R3[S.i],ok=S.done&&S.pick===q.r;
   function b(v,l,c2){var c=S.done?(v===q.r?' ok':(v===S.pick?' bad':'')):'';return '<button class="opt '+c2+c+'" type="button" data-a="pick" data-v="'+v+'"'+(S.done?' disabled':'')+'>'+l+'</button>';}
   return prog(3)+'<div class="eyebrow ctr">Reto 3 · ¿Positivo o negativo? · '+(S.i+1)+' de '+R3.length+'</div>'+
-  '<div class="how"><b>Qué hacer</b>Ya te damos la actividad y su aspecto. Tú decides si el <u>impacto</u> en el ambiente es positivo o negativo.</div>'+
-  '<div class="actbox"><small>Actividad</small><div class="t">'+esc(q.s)+'</div></div>'+
-  '<div class="aspbox"><small>Aspecto</small><div class="t">'+esc(q.a)+'</div></div>'+
+  '<div class="how"><b>Qué hacer</b>Ya te damos el aspecto y el impacto que genera. Tú decides si ese <u>impacto</u> es positivo o negativo para el ambiente.</div>'+
+  '<div class="aspbox"><small>Aspecto</small><div class="t">'+esc(q.ap)+'</div></div>'+
+  '<div class="actbox impbox"><small>Impacto</small><div class="t">'+esc(q.im)+'</div></div>'+
   '<p class="bigq">¿El <em>impacto</em> es positivo o negativo?</p>'+
   '<div class="pair big">'+b("positivo","Positivo","pos")+b("negativo","Negativo","neg")+'</div>'+(S.done?fb(ok,q.w,S.i===R3.length-1):'');
 }
